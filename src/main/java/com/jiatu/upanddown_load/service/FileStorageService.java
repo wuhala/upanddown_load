@@ -20,8 +20,13 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class FileStorageService {
 
+    // 文件在本地存储的地址
     private final Path fileStorageLocation;
 
+    /*
+    *获取文件存储路径、创建
+    * 存储文件到系统
+     */
     @Autowired
     public FileStorageService(FileStorageProperties fileStorageProperties){
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir()).toAbsolutePath().normalize();
@@ -32,8 +37,11 @@ public class FileStorageService {
         }
     }
 
+    /*
+    * 加载文件
+     */
     public String storeFile(MultipartFile file){
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());//获取文件名
         Path targetLocation = this.fileStorageLocation.resolve(fileName);
         try (InputStream inputStream = file.getInputStream()) {
             Files.copy(inputStream, targetLocation, StandardCopyOption.REPLACE_EXISTING);
@@ -43,6 +51,9 @@ public class FileStorageService {
         return fileName;
     }
 
+    /*
+    *加载文件为资源
+     */
     public Resource loadFileAsResource(String fileName ){
         try {
             Path filePath = this.fileStorageLocation.resolve(fileName).normalize();

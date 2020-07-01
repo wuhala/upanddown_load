@@ -1,7 +1,11 @@
 package com.jiatu.upanddown_load;
 
+
 import java.io.Serializable;
 
+/*
+*返回响应输出
+ */
 public class UploadFileResponse implements Serializable {
     private String fileName;
     private String fileDownloadUri;
@@ -14,7 +18,6 @@ public class UploadFileResponse implements Serializable {
         this.fileType = fileType;
         this.size = size;
     }
-
     public String getFileName() {
         return fileName;
     }
